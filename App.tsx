@@ -92,7 +92,7 @@ const HomePage: React.FC<{ onNavigate: (page: 'home' | 'course-plan' | 'blog' | 
               </button>
             </div>
             <div className="flex flex-wrap gap-6 text-sm text-gray-500 pt-2">
-              <span className="flex items-center font-medium"><CheckIcon /> 100+ 企业选择</span>
+              <span className="flex items-center font-medium"><CheckIcon /> 500+ 人员选择</span>
               <span className="flex items-center font-medium"><CheckIcon /> 50+ 实战视频课程</span>
               <span className="flex items-center font-medium"><CheckIcon /> 定期更新行业洞察</span>
             </div>
@@ -346,7 +346,7 @@ const HomePage: React.FC<{ onNavigate: (page: 'home' | 'course-plan' | 'blog' | 
                <div className="absolute -left-10 -bottom-10 w-40 h-40 bg-indigo-500 rounded-full opacity-50 blur-3xl"></div>
                
                <div className="relative z-10">
-                  <h2 className="text-3xl font-bold mb-4">定制您的企业培训方案</h2>
+                  <h2 className="text-3xl font-bold mb-4">定制您的培训方案</h2>
                   <p className="text-blue-100 leading-relaxed mb-6">填写您的需求，我们将为您提供专属的呼叫中心运营提升计划。</p>
                   <ul className="space-y-4 text-sm text-blue-50">
                     <li className="flex items-center"><CheckIcon /> 1对1 需求诊断</li>
@@ -356,7 +356,7 @@ const HomePage: React.FC<{ onNavigate: (page: 'home' | 'course-plan' | 'blog' | 
                </div>
                
                <div className="relative z-10 mt-10">
-                  <p className="text-xs opacity-60">已有 500+ 企业提交了需求</p>
+                  <p className="text-xs opacity-60">已有 500+ 提交了需求</p>
                </div>
             </div>
             
@@ -661,34 +661,29 @@ const BlogPage: React.FC<{ onNavigate: (page: 'home' | 'course-plan' | 'blog' | 
             ))}
          </div>
 
-         {/* Grid */}
-         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+         {/* List View Container */}
+         <div className="flex flex-col gap-6 max-w-5xl mx-auto">
             {posts
               .filter(post => activeCategory === '全部' || post.category === activeCategory)
               .map(post => (
-              <article key={post.id} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group cursor-pointer border border-gray-100 hover:-translate-y-1 flex flex-col h-full">
-                {/* Image */}
-                <div className="h-52 overflow-hidden relative">
-                   <img src={post.img} alt={post.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                   <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-blue-700 shadow-sm">
-                      {post.category}
+              <article key={post.id} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group cursor-pointer border border-gray-100 hover:-translate-y-1 flex flex-col md:flex-row">
+                {/* Content Section (Left on Desktop, Bottom on Mobile) */}
+                <div className="p-6 md:p-8 flex flex-col flex-grow order-2 md:order-1 md:w-2/3 justify-between">
+                   <div>
+                       <div className="flex items-center text-xs text-gray-400 mb-3 font-medium flex-wrap gap-y-2">
+                          <span className="bg-blue-50 text-blue-600 px-2.5 py-0.5 rounded-full font-semibold mr-2">{post.category}</span>
+                          <span>{post.date}</span>
+                          <span className="mx-2 text-gray-300">•</span>
+                          <span>{post.readTime}</span>
+                       </div>
+                       <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors leading-tight">
+                          {post.title}
+                       </h3>
+                       <p className="text-gray-500 text-sm md:text-base line-clamp-2 leading-relaxed mb-6">
+                          {post.excerpt}
+                       </p>
                    </div>
-                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300"></div>
-                </div>
-                {/* Content */}
-                <div className="p-6 flex flex-col flex-grow">
-                   <div className="flex items-center text-xs text-gray-400 mb-3 font-medium">
-                      <span>{post.date}</span> 
-                      <span className="mx-2 text-gray-300">•</span> 
-                      <span>{post.readTime}</span>
-                   </div>
-                   <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors line-clamp-2 leading-tight">
-                      {post.title}
-                   </h3>
-                   <p className="text-gray-500 text-sm line-clamp-3 leading-relaxed mb-6 flex-grow">
-                      {post.excerpt}
-                   </p>
-                   <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-50">
+                   <div className="flex items-center justify-between pt-4 border-t border-gray-50 mt-auto">
                       <div className="flex items-center gap-2">
                          <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xs">
                             {post.author.charAt(0)}
@@ -699,6 +694,13 @@ const BlogPage: React.FC<{ onNavigate: (page: 'home' | 'course-plan' | 'blog' | 
                         阅读全文 <ArrowRightIcon />
                       </span>
                    </div>
+                </div>
+                
+                {/* Image Section (Right on Desktop, Top on Mobile) */}
+                <div className="h-52 md:h-auto md:w-1/3 relative order-1 md:order-2 shrink-0 overflow-hidden">
+                   <img src={post.img} alt={post.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                   {/* Overlay for hover effect */}
+                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300"></div>
                 </div>
               </article>
             ))}
