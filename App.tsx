@@ -1,4 +1,3 @@
-
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
@@ -1079,9 +1078,14 @@ const App: React.FC = () => {
                 <div className="bg-white p-3 rounded-xl shadow-lg mb-6 transform hover:scale-105 transition-transform duration-300">
                   {/* User provided QR Code */}
                   <img 
-                    src="./wechat_qr.png" 
+                    src="/wechat_qr.png" 
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.onerror = null;
+                      target.src = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=JoinCallMastery";
+                    }}
                     alt="扫码加入学习群" 
-                    className="w-40 h-40 object-contain rounded-lg" 
+                    className="w-40 h-40 object-contain rounded-lg border border-gray-100" 
                   />
                 </div>
                 
