@@ -1,3 +1,4 @@
+
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
@@ -12,6 +13,10 @@ const CheckIcon = () => (
 
 const PlayIcon = () => (
   <svg className="w-16 h-16 text-white drop-shadow-lg transform transition-transform group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+);
+
+const VideoIcon = () => (
+  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
 );
 
 const CloseIcon = () => (
@@ -310,20 +315,22 @@ const HomePage: React.FC<{ onNavigate: (page: 'home' | 'course-plan' | 'blog' | 
                             <img src={post.img} alt={post.title} className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" />
                          </div>
                          <div className="p-6">
-                             <div className="flex items-center text-xs text-gray-400 mb-3 font-medium">
-                                 <span>{post.date}</span>
-                                 <span className="mx-2">•</span>
-                                 <span>{post.read}</span>
-                             </div>
                              <h3 className="font-bold text-xl text-gray-900 mb-3 group-hover:text-blue-600 transition-colors line-clamp-2">{post.title}</h3>
                              <p className="text-gray-500 text-sm mb-4 line-clamp-2 leading-relaxed">
                                  {idx === 0 && "科学的排班管理能够显著提升呼叫中心的运营效率，减少人力浪费，提升员工满意度。本文详细介绍了三种高效排班模型。"}
                                  {idx === 1 && "系统化的新员工培训是团队成功的关键，了解如何构建高效的培训体系，让新人在第一周就能产生价值。"}
                                  {idx === 2 && "通过正确的KPI指标监控，优化业务流程，发现问题并采取改进措施。这5个指标是每个运营经理都必须掌握的。"}
                              </p>
-                             <span className="text-blue-600 font-bold text-sm hover:underline flex items-center">
-                                 阅读全文 <ArrowRightIcon />
-                             </span>
+                             <div className="flex items-center justify-between pt-2 border-t border-gray-50 mt-auto">
+                                <div className="flex items-center text-xs text-gray-400 font-medium gap-2">
+                                    <span>{post.date}</span>
+                                    <span>•</span>
+                                    <span>{post.read}</span>
+                                </div>
+                                <span className="text-blue-600 font-bold text-sm hover:underline flex items-center">
+                                    阅读全文 <ArrowRightIcon />
+                                </span>
+                             </div>
                          </div>
                      </div>
                  ))}
@@ -339,7 +346,7 @@ const HomePage: React.FC<{ onNavigate: (page: 'home' | 'course-plan' | 'blog' | 
       {/* Lead Collection Form Section */}
       <section id="contact-form" className="py-24 bg-slate-50 border-t border-slate-100">
         <div className="container mx-auto px-4 md:px-8">
-          <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row">
+          <div className="max-w-3xl mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row">
             <div className="md:w-2/5 bg-blue-600 p-10 text-white flex flex-col justify-between relative overflow-hidden">
                <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-black/20 z-0"></div>
                <div className="absolute -right-10 -top-10 w-40 h-40 bg-blue-500 rounded-full opacity-50 blur-3xl"></div>
@@ -561,7 +568,243 @@ const CoursePlanPage: React.FC<{ onJoin: () => void }> = ({ onJoin }) => {
   );
 }
 
-// 3. Blog Page Component
+// 3. Blog Detail Component (New)
+const Highlight = ({ children, color = "blue" }: { children?: React.ReactNode; color?: "blue" | "red" | "green" | "orange" }) => {
+  const colorClasses = {
+    blue: "text-blue-700 bg-blue-50 border-b-2 border-blue-200",
+    red: "text-red-700 bg-red-50 border-b-2 border-red-200",
+    green: "text-green-700 bg-green-50 border-b-2 border-green-200",
+    orange: "text-orange-700 bg-orange-50 border-b-2 border-orange-200"
+  };
+  return <span className={`font-bold px-1 mx-0.5 rounded ${colorClasses[color]}`}>{children}</span>;
+};
+
+const BlogPostDetail: React.FC<{ post: any; onBack: () => void }> = ({ post, onBack }) => {
+  const renderContent = () => {
+    if (post.id === 1) {
+       return (
+         <div className="space-y-12 text-gray-700 leading-relaxed">
+           {/* Section 1: Intro */}
+           <section>
+             <h2 className="text-2xl font-bold text-gray-900 mb-4">排班：棋盘上的艺术</h2>
+             <p className="mb-4">
+               如果说预测与规划是为战役准备兵力，那么<Highlight>排班 (Scheduling)</Highlight> 就是在具体的战场上排兵布阵。
+               排班的终极艺术，在于<Highlight>用最合理的“供给”曲线，完美地贴合“需求”曲线</Highlight>。
+             </p>
+             <div className="bg-blue-50 border-l-4 border-blue-600 p-6 rounded-r-lg my-6">
+               <p className="font-serif text-lg italic text-blue-800">
+                 “排班就是把各种班次方块严丝合缝地填满话务曲线，空隙越少，浪费越少，员工越轻松。”
+               </p>
+             </div>
+           </section>
+
+           {/* Section 2: Preparation */}
+           <section>
+             <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center">
+               <span className="w-8 h-8 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center text-sm mr-3">01</span>
+               排班前的五大准备
+             </h3>
+             <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {[
+                    <span key="1">明确<Highlight color="orange">服务水平标准 (SLA)</Highlight></span>,
+                    <span key="2"><Highlight color="orange">预算与成本控制</Highlight></span>,
+                    <span key="3"><Highlight color="orange">员工技能地图</Highlight></span>,
+                    <span key="4">识别<Highlight color="orange">业务高峰</Highlight></span>,
+                    <span key="5">遵守法规与政策</span>
+                ].map((item, i) => (
+                  <li key={i} className="flex items-center p-4 bg-white border border-gray-100 rounded-lg shadow-sm">
+                    <CheckIcon />
+                    <span className="font-medium">{item}</span>
+                  </li>
+                ))}
+             </ul>
+           </section>
+
+           {/* Section 3: Shift Types (Visual Chart) */}
+           <section>
+              <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center">
+               <span className="w-8 h-8 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center text-sm mr-3">02</span>
+               排班的“十八般武艺”
+             </h3>
+             <p className="mb-6">传统固定的“早班9-6”模式已无法应对波动的业务量。现代WFM必须掌握灵活的“班次武器库”：</p>
+             
+             <div className="space-y-4">
+                <div className="border border-gray-200 rounded-xl p-5 hover:shadow-md transition-shadow">
+                   <div className="flex justify-between items-center mb-2">
+                      <h4 className="font-bold text-gray-900"><Highlight>标准班次 (Standard)</Highlight></h4>
+                      <span className="text-xs bg-gray-100 px-2 py-1 rounded">基石</span>
+                   </div>
+                   <div className="h-4 bg-gray-100 rounded-full overflow-hidden relative">
+                      <div className="absolute left-0 w-full h-full bg-blue-500 opacity-80"></div>
+                      <div className="absolute text-[10px] text-white font-bold w-full text-center top-0 leading-4">9:00 - 18:00</div>
+                   </div>
+                   <p className="text-sm text-gray-500 mt-2">覆盖业务量平稳的核心时段。</p>
+                </div>
+
+                <div className="border border-gray-200 rounded-xl p-5 hover:shadow-md transition-shadow">
+                   <div className="flex justify-between items-center mb-2">
+                      <h4 className="font-bold text-gray-900"><Highlight color="green">两头班 (Split Shift)</Highlight></h4>
+                      <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">应对双高峰</span>
+                   </div>
+                   <div className="h-4 bg-gray-100 rounded-full overflow-hidden relative flex">
+                      <div className="w-[40%] h-full bg-green-500 opacity-80"></div>
+                      <div className="w-[20%] h-full bg-transparent"></div>
+                      <div className="w-[40%] h-full bg-green-500 opacity-80"></div>
+                   </div>
+                   <div className="flex justify-between text-[10px] text-gray-400 mt-1">
+                      <span>10:00</span>
+                      <span>休息</span>
+                      <span>20:00</span>
+                   </div>
+                   <p className="text-sm text-gray-500 mt-2">完美应对“早晚双高峰、午间低谷”的业务模式（如外卖客服）。</p>
+                </div>
+
+                <div className="border border-gray-200 rounded-xl p-5 hover:shadow-md transition-shadow">
+                   <div className="flex justify-between items-center mb-2">
+                      <h4 className="font-bold text-gray-900"><Highlight color="orange">高峰兼职 (Part-time)</Highlight></h4>
+                      <span className="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded">成本之王</span>
+                   </div>
+                   <div className="h-4 bg-gray-100 rounded-full overflow-hidden relative flex justify-center">
+                      <div className="w-[30%] h-full bg-orange-500 opacity-80"></div>
+                   </div>
+                   <p className="text-sm text-gray-500 mt-2">精准补充午间或晚间高峰的人力缺口。</p>
+                </div>
+             </div>
+           </section>
+
+           {/* Section 4: Optimization Rules */}
+           <section>
+             <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center">
+               <span className="w-8 h-8 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center text-sm mr-3">03</span>
+               排班优化策略
+             </h3>
+             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="bg-red-50 p-6 rounded-xl border border-red-100">
+                   <h4 className="font-bold text-red-800 mb-3 flex items-center">
+                     <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                     绝对红线
+                   </h4>
+                   <ul className="space-y-2 text-sm text-red-700">
+                      <li>• <strong><Highlight color="red">Clopening</Highlight>:</strong> 禁止晚班接早班（休息不足8小时）。</li>
+                      <li>• <strong><Highlight color="red">连续高压</Highlight>:</strong> 避免连续多天安排同一人上最高峰时段。</li>
+                   </ul>
+                </div>
+                <div className="bg-green-50 p-6 rounded-xl border border-green-100">
+                   <h4 className="font-bold text-green-800 mb-3 flex items-center">
+                     <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                     战力优化
+                   </h4>
+                   <ul className="space-y-2 text-sm text-green-700">
+                      <li>• <strong><Highlight color="green">新人保护</Highlight>:</strong> 避开“地狱时段”，安排导师在场时段。</li>
+                      <li>• <strong><Highlight color="green">精兵策略</Highlight>:</strong> 高峰期安排AHT最短的老员工。</li>
+                   </ul>
+                </div>
+             </div>
+           </section>
+
+           {/* Section 5: Metrics (Charts) */}
+           <section>
+             <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center">
+               <span className="w-8 h-8 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center text-sm mr-3">04</span>
+               黄金指标
+             </h3>
+             <div className="flex flex-col md:flex-row gap-8 justify-center items-center">
+                {/* Chart 1 */}
+                <div className="text-center">
+                   <div className="relative w-40 h-40 flex items-center justify-center">
+                      <svg className="w-full h-full transform -rotate-90">
+                         <circle cx="80" cy="80" r="70" stroke="#f3f4f6" strokeWidth="12" fill="none" />
+                         <circle cx="80" cy="80" r="70" stroke="#3b82f6" strokeWidth="12" fill="none" strokeDasharray="440" strokeDashoffset="40" className="text-blue-600" />
+                      </svg>
+                      <div className="absolute text-center">
+                         <div className="text-3xl font-bold text-blue-700">&lt;10%</div>
+                         <div className="text-xs text-gray-500 uppercase font-bold">缺口/冗余</div>
+                      </div>
+                   </div>
+                   <p className="font-bold mt-4 text-gray-800">排班契合度</p>
+                   <p className="text-xs text-gray-500">供给与需求的匹配程度</p>
+                </div>
+
+                {/* Chart 2 */}
+                <div className="text-center">
+                   <div className="relative w-40 h-40 flex items-center justify-center">
+                      <svg className="w-full h-full transform -rotate-90">
+                         <circle cx="80" cy="80" r="70" stroke="#f3f4f6" strokeWidth="12" fill="none" />
+                         <circle cx="80" cy="80" r="70" stroke="#10b981" strokeWidth="12" fill="none" strokeDasharray="440" strokeDashoffset="10" className="text-green-500" />
+                      </svg>
+                      <div className="absolute text-center">
+                         <div className="text-3xl font-bold text-green-600">&gt;97%</div>
+                         <div className="text-xs text-gray-500 uppercase font-bold">遵守率</div>
+                      </div>
+                   </div>
+                   <p className="font-bold mt-4 text-gray-800">排班遵守率</p>
+                   <p className="text-xs text-gray-500">实际工作与排班的吻合度</p>
+                </div>
+             </div>
+           </section>
+         </div>
+       );
+    } else {
+      // Placeholder for other posts
+      return (
+        <div className="text-gray-600">
+          <p className="mb-4">本文内容正在整理中，敬请期待。</p>
+          <p>该文章将涵盖 {post.title} 的核心概念与实操指南。</p>
+        </div>
+      );
+    }
+  };
+
+  return (
+    <div className="animate-fade-in min-h-screen bg-white">
+      {/* Article Header */}
+      <div className="relative h-96 w-full">
+         <img src={post.img} alt={post.title} className="w-full h-full object-cover" />
+         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+         <div className="absolute bottom-0 left-0 w-full p-8 md:p-16">
+            <div className="container mx-auto">
+              <span className="inline-block bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full mb-4">
+                {post.category}
+              </span>
+              <h1 className="text-3xl md:text-5xl font-bold text-white mb-4 leading-tight max-w-4xl">
+                {post.title}
+              </h1>
+              <div className="flex items-center text-gray-300 text-sm gap-6">
+                <span className="flex items-center"><span className="w-8 h-8 rounded-full bg-gray-600 mr-2 flex items-center justify-center text-xs font-bold text-white">{post.author[0]}</span> {post.author}</span>
+                <span>{post.date}</span>
+                <span>{post.readTime}</span>
+              </div>
+            </div>
+         </div>
+         <button 
+           onClick={onBack}
+           className="absolute top-8 left-8 bg-white/20 hover:bg-white/30 backdrop-blur text-white p-2 rounded-full transition-colors z-20"
+         >
+           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+         </button>
+      </div>
+
+      {/* Content Container */}
+      <div className="container mx-auto px-4 md:px-8 py-12">
+         <div className="max-w-3xl mx-auto">
+            {renderContent()}
+            
+            {/* CTA at bottom */}
+            <div className="mt-16 p-8 bg-slate-50 rounded-2xl border border-slate-100 text-center">
+              <h4 className="text-xl font-bold text-gray-900 mb-3">希望深入学习 WFM 体系？</h4>
+              <p className="text-gray-600 mb-6">观看我们的视频课程，获取完整的排班计算模型与工具表。</p>
+              <button className="bg-blue-600 text-white px-8 py-3 rounded-lg font-bold hover:bg-blue-700 transition-colors shadow-lg inline-flex items-center gap-2">
+                <VideoIcon />
+                观看视频
+              </button>
+            </div>
+         </div>
+      </div>
+    </div>
+  );
+}
+
+// 4. Blog Page Component
 const BlogPage: React.FC<{ onNavigate: (page: 'home' | 'course-plan' | 'blog' | 'video-learning') => void }> = ({ onNavigate }) => {
   const posts = [
     { 
@@ -627,6 +870,12 @@ const BlogPage: React.FC<{ onNavigate: (page: 'home' | 'course-plan' | 'blog' | 
   ];
 
   const [activeCategory, setActiveCategory] = useState('全部');
+  const [selectedPostId, setSelectedPostId] = useState<number | null>(null);
+
+  if (selectedPostId) {
+    const post = posts.find(p => p.id === selectedPostId);
+    return <BlogPostDetail post={post} onBack={() => setSelectedPostId(null)} />;
+  }
 
   return (
     <div className="animate-fade-in min-h-screen bg-gray-50">
@@ -666,16 +915,10 @@ const BlogPage: React.FC<{ onNavigate: (page: 'home' | 'course-plan' | 'blog' | 
             {posts
               .filter(post => activeCategory === '全部' || post.category === activeCategory)
               .map(post => (
-              <article key={post.id} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group cursor-pointer border border-gray-100 hover:-translate-y-1 flex flex-col md:flex-row">
-                {/* Content Section (Left on Desktop, Bottom on Mobile) */}
-                <div className="p-6 md:p-8 flex flex-col flex-grow order-2 md:order-1 md:w-2/3 justify-between">
+              <article key={post.id} onClick={() => setSelectedPostId(post.id)} className="bg-white rounded-2xl p-6 md:p-8 shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 group cursor-pointer flex flex-col md:flex-row gap-6 md:gap-8 items-center">
+                {/* Text Section */}
+                <div className="flex-1 flex flex-col h-full order-2 md:order-1">
                    <div>
-                       <div className="flex items-center text-xs text-gray-400 mb-3 font-medium flex-wrap gap-y-2">
-                          <span className="bg-blue-50 text-blue-600 px-2.5 py-0.5 rounded-full font-semibold mr-2">{post.category}</span>
-                          <span>{post.date}</span>
-                          <span className="mx-2 text-gray-300">•</span>
-                          <span>{post.readTime}</span>
-                       </div>
                        <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors leading-tight">
                           {post.title}
                        </h3>
@@ -683,22 +926,24 @@ const BlogPage: React.FC<{ onNavigate: (page: 'home' | 'course-plan' | 'blog' | 
                           {post.excerpt}
                        </p>
                    </div>
-                   <div className="flex items-center justify-between pt-4 border-t border-gray-50 mt-auto">
-                      <div className="flex items-center gap-2">
-                         <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xs">
-                            {post.author.charAt(0)}
-                         </div>
-                         <span className="text-xs font-bold text-gray-700">{post.author}</span>
+                   
+                   {/* Combined Bottom Row: Meta + Action */}
+                   <div className="mt-auto flex items-center justify-between w-full pt-2 border-t border-gray-50/50 md:border-none">
+                      <div className="flex items-center gap-3 text-xs text-gray-400 font-medium">
+                           <span className="bg-blue-50 text-blue-600 px-2.5 py-1 rounded-md">{post.category}</span>
+                           <span className="hidden sm:inline">{post.date}</span>
+                           <span className="hidden sm:inline">•</span>
+                           <span>{post.readTime}</span>
                       </div>
-                      <span className="text-blue-600 text-sm font-bold group-hover:translate-x-1 transition-transform flex items-center">
-                        阅读全文 <ArrowRightIcon />
+                      <span className="text-blue-600 text-sm font-bold group-hover:translate-x-1 transition-transform flex items-center whitespace-nowrap ml-4">
+                          阅读全文 <ArrowRightIcon />
                       </span>
                    </div>
                 </div>
                 
-                {/* Image Section (Right on Desktop, Top on Mobile) */}
-                <div className="h-52 md:h-auto md:w-1/3 relative order-1 md:order-2 shrink-0 overflow-hidden">
-                   <img src={post.img} alt={post.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                {/* Image Section - Smaller thumbnail style */}
+                <div className="w-full md:w-48 h-48 md:h-32 shrink-0 rounded-xl overflow-hidden bg-gray-100 relative order-1 md:order-2">
+                   <img src={post.img} alt={post.title} className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" />
                    {/* Overlay for hover effect */}
                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300"></div>
                 </div>
@@ -717,7 +962,7 @@ const BlogPage: React.FC<{ onNavigate: (page: 'home' | 'course-plan' | 'blog' | 
   );
 }
 
-// 4. Video Learning Page Component (New)
+// 5. Video Learning Page Component (New)
 const VideoLearningPage: React.FC = () => {
   // Mock Data Generation for 24 videos
   const allVideos = [
