@@ -481,7 +481,7 @@ const CoursePlanPage: React.FC<{ onJoin: () => void }> = ({ onJoin }) => {
       <header className="bg-gradient-to-r from-slate-900 to-blue-900 text-white py-20 relative overflow-hidden">
          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
          <div className="container mx-auto px-4 relative z-10 text-center">
-            <span className="text-orange-400 font-bold tracking-wider uppercase text-sm mb-4 block">Operations Excellence</span>
+            <span className="text-orange-400 font-bold tracking-wider uppercase text-xs mb-4 block">Operations Excellence</span>
             <h1 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight">呼叫中心 SOP 标准化运营体系</h1>
             <p className="text-xl text-blue-100 max-w-2xl mx-auto leading-relaxed">
               从基础建设到高阶管理，全方位打造“自动运转”的高效呼叫中心。
@@ -1337,17 +1337,8 @@ const App: React.FC = () => {
                 </div>
                 
                 <div className="space-y-3 text-left text-sm text-blue-50 w-full max-w-xs mx-auto">
-                  <div className="flex items-center gap-3 bg-blue-700/30 p-2 rounded-lg">
-                    <div className="bg-blue-500 rounded-full p-1"><CheckIcon /></div>
-                    <span>每日早报：行业动态一网打尽</span>
-                  </div>
-                  <div className="flex items-center gap-3 bg-blue-700/30 p-2 rounded-lg">
-                    <div className="bg-blue-500 rounded-full p-1"><CheckIcon /></div>
-                    <span>大咖直播：每周四晚8点干货分享</span>
-                  </div>
-                  <div className="flex items-center gap-3 bg-blue-700/30 p-2 rounded-lg">
-                    <div className="bg-blue-500 rounded-full p-1"><CheckIcon /></div>
-                    <span>资源对接：优质人脉与招聘信息</span>
+                  <div className="flex items-center gap-3 bg-blue-700/30 p-3 rounded-lg justify-center">
+                    <span className="font-medium text-lg">共同学习，提升技能</span>
                   </div>
                 </div>
               </div>
@@ -1374,7 +1365,7 @@ const App: React.FC = () => {
                     <span className="bg-orange-100 text-orange-600 text-xs font-bold px-2 py-1 rounded uppercase tracking-wide">限时福利</span>
                     <h3 className="text-2xl font-bold text-gray-900 mt-3">免费领取 SOP 工具包</h3>
                     <p className="text-gray-500 text-sm mt-2 leading-relaxed">
-                      完善以下信息，我们将把包含 <span className="text-gray-900 font-medium">排班模版、质检评分表、话术库</span> 等在内的工具包发送给您。
+                      完善以下信息，我们将把包含 <span className="text-gray-900 font-medium">排班模版、质检评分表、培训评估</span> 等在内的工具包发送给您。
                     </p>
                   </div>
                   
